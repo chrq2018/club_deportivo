@@ -1,12 +1,29 @@
+import pyodbc
 from Conexion import *
 
+class Socio():
+    def __init__(self,id, nombre, rol):
+        self.id = id
+        self.nombre = nombre
+        self.rol = rol
+        
 class Usuario:
+    numUsuario = 0
+    def __init__(self,usuario, password):
+        self.usuario = usuario
+        self.password = password
+
+        self.conectado = False
+        self.intentos = 3
+
+        Usuario.numUsuario += 1
+
     def alta(nombre):
         try:
-            conn = Conexion.conexion_sql_server()
+            conn = pyodbc.connect(conexion_sql_server())
             cursor = conn.cursor()
             sql = "insert into socios (nombre) values (?);"
-            valores = (nombre)
+            valores = (Socio.nombre)
             cursor.execute(sql,valores)
             print(cursor.rowcount,"Registro ingresado")
             conn.close()
@@ -15,7 +32,7 @@ class Usuario:
 
     def lista():
         try:
-            conn = Conexion.conexion_sql_server()
+            conn = pyodbc.connect(conexion_sql_server())
             cursor = conn.cursor()
             sql = "select * from socios;"
             cursor.execute(sql)
@@ -32,7 +49,7 @@ class Usuario:
             actualizar = input("\nQuiere actualizar un dato s/n: ")
             if actualizar.lower() == "s":
                 try:
-                    conn = Conexion.conexion_sql_server()
+                    conn = pyodbc.connect(conexion_sql_server())
                     cursor = conn.cursor()
                     idS = input("Ingrese el ID del socio que desea actualizar: ")
                     sql ="select id from socios where id = ?;"
@@ -57,7 +74,7 @@ class Usuario:
             eliminar = input("\nQuiere eliminar un socio s/n: ")
             if eliminar.lower() == "s":
                 try:
-                    conn = Conexion.conexion_sql_server()
+                    conn = pyodbc.connect(conexion_sql_server())
                     cursor = conn.cursor()
                     idS = input("Ingrese el ID del socio que desea eliminar: ")
                     consultaV ="select id from socios where id = ?;"
@@ -74,5 +91,7 @@ class Usuario:
                     print("Error!, no se pudo realizar la baja{}".format(e))
             else:
                 print("Salio de la opcion Baja")
-                break
+                break    
+
     
+                                 

@@ -12,28 +12,45 @@ considerar según el grupo de trabajo)
 from Conexion import *
 #from consultas import *
 from funciones import *
-from Usuario import *
+
+from entidades import *
 
 #Programa principal
-conexion = Conexion.conexion_sql_server()
 
-opcion = 0
-while opcion != 5:
-    opcion = menu()
-    if opcion == 1:
+op = 0
+while op != 2:
+    op = menu_login()
+    if op == 1:
+        Usuario.usuario = input("Ingrese usuario: ")
+        Usuario.password = input("Ingrese password: ")
+        
+        rol = ingreso("juan", 123)
+        
+        if Usuario.rol == 2:
+            menu_gestion_empleado()
+        elif Usuario.rol == 3:
+            menu_gestion_gerente()
+    else:
+        print("FIN!")
+        break
+    
+
+op1 = 0
+while op1 != 5:
+    op1 = menu_gestion_empleado()
+    if op1 == 1:
         print("***Dar de alta un Socio***")
         nombre = input("Ingrese el nombre: ")
         Usuario.alta(nombre)
-    elif opcion == 2:
+    elif op1 == 2:
         print("***Dar de baja un socio***")
         Usuario.baja()
-    elif opcion == 3:
+    elif op1 == 3:
         print("Modificar los datos de un socio")
         Usuario.modificar()
-    elif opcion == 4:
+    elif op1 == 4:
         print("***Lista de Socios***\n")
         Usuario.lista()  
     else:
-        conexion.close()
         print("FIN!")
 
