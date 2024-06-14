@@ -9,33 +9,30 @@ considerar según el grupo de trabajo)
 4) Rendición de cuentas mensuales
 """
 
-from conexion import *
-from consultas import *
+from Conexion import *
+#from consultas import *
 from funciones import *
+from Usuario import *
 
 #Programa principal
-conexion = conexion_sql_server()
+conexion = Conexion.conexion_sql_server()
 
 opcion = 0
 while opcion != 5:
     opcion = menu()
     if opcion == 1:
-        print("Ingrese los datos del Socio\n")
+        print("***Dar de alta un Socio***")
         nombre = input("Ingrese el nombre: ")
-        alta(nombre, conexion)
-        
+        Usuario.alta(nombre)
     elif opcion == 2:
-        print("Modificar los datos de un socio")
-        modificar(conexion)
-        
+        print("***Dar de baja un socio***")
+        Usuario.baja()
     elif opcion == 3:
         print("Modificar los datos de un socio")
-        baja(conexion)  
-        
+        Usuario.modificar()
     elif opcion == 4:
-        print("Lista de Socio\n")
-        lista(conexion)
-        
+        print("***Lista de Socios***\n")
+        Usuario.lista()  
     else:
         conexion.close()
         print("FIN!")
