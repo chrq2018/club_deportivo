@@ -1,5 +1,6 @@
 import pyodbc
 from Conexion import *
+from entidades import *
 
 class Socio():
     def __init__(self,id, nombre, rol):
@@ -9,14 +10,23 @@ class Socio():
         
 class Usuario:
     numUsuario = 0
-    def __init__(self,usuario, password):
+    def __init__(self,usuario, password, rol):
         self.usuario = usuario
         self.password = password
+        self.rol = rol
 
         self.conectado = False
         self.intentos = 3
 
         Usuario.numUsuario += 1
+
+    def iniciar_sesion(usuario, clave):
+        conn = pyodbc.connect(conexion_sql_server())
+        cursor = conn.cursor()
+        sql ="select * from usuarios where usuario = ? and clave = ?;"
+        cursor.execute(sql, (usuario, clave))
+        resultado = cursor.fetchone()
+        return resultado
 
     def alta(nombre):
         try:
@@ -93,5 +103,6 @@ class Usuario:
                 print("Salio de la opcion Baja")
                 break    
 
-    
+    def mostrar_informe():
+        pass 
                                  

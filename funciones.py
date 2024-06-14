@@ -39,16 +39,3 @@ def menu_login():
     return opc
         
 
-def ingreso(usuario, clave):
-    conn = pyodbc.connect(conexion_sql_server())
-    cursor = conn.cursor()
-    sql ="select rol from socios where usuario = ? and clave = ?;"
-    cursor.execute(sql, (usuario, clave))
-    resultado = cursor.fetchone()
-    if resultado:
-        resultado = True
-    else:
-        resultado = False
-    return resultado
-
-
