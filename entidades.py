@@ -9,21 +9,16 @@ class Socio():
         self.rol = rol
         
 class Usuario:
-    numUsuario = 0
+   
     def __init__(self,usuario, password, rol):
         self.usuario = usuario
         self.password = password
         self.rol = rol
 
-        self.conectado = False
-        self.intentos = 3
-
-        Usuario.numUsuario += 1
-
     def iniciar_sesion(usuario, clave):
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        sql ="select * from usuarios where usuario = ? and clave = ?;"
+        sql ="select * from Usuarios where Usuario = ? and Pass = ?;"
         cursor.execute(sql, (usuario, clave))
         resultado = cursor.fetchone()
         return resultado
@@ -32,7 +27,7 @@ class Usuario:
         try:
             conn = pyodbc.connect(conexion_sql_server())
             cursor = conn.cursor()
-            sql = "insert into socios (nombre) values (?);"
+            sql = "insert into Clientes (nombre) values (?);"
             valores = (Socio.nombre)
             cursor.execute(sql,valores)
             print(cursor.rowcount,"Registro ingresado")
@@ -44,7 +39,7 @@ class Usuario:
         try:
             conn = pyodbc.connect(conexion_sql_server())
             cursor = conn.cursor()
-            sql = "select * from socios;"
+            sql = "select * from Clientes;"
             cursor.execute(sql)
             resultado = cursor.fetchone()
             while resultado:
@@ -62,12 +57,12 @@ class Usuario:
                     conn = pyodbc.connect(conexion_sql_server())
                     cursor = conn.cursor()
                     idS = input("Ingrese el ID del socio que desea actualizar: ")
-                    sql ="select id from socios where id = ?;"
+                    sql ="select id from Clientes where Id_cliente = ?;"
                     cursor.execute(sql, idS)
                     resultado = cursor.fetchone()
                     if resultado:
                         nombre = input("Ingrese el nuevo nombre: ")
-                        consultaU = "update socios set nombre = ? where id = ?;"
+                        consultaU = "update Clientes set Nombre = ? where Id_cliente = ?;"
                         cursor.execute(consultaU, (nombre, idS))
                         conn.commit()
                     else:
@@ -87,11 +82,11 @@ class Usuario:
                     conn = pyodbc.connect(conexion_sql_server())
                     cursor = conn.cursor()
                     idS = input("Ingrese el ID del socio que desea eliminar: ")
-                    consultaV ="select id from socios where id = ?;"
+                    consultaV ="select Id_cliente from Clientes where id_cliente = ?;"
                     cursor.execute(consultaV, idS)
                     resultado = cursor.fetchone()
                     if resultado:
-                        consultaD = "delete from socios where id = ?;"
+                        consultaD = "delete from Clientes where id_cliente = ?;"
                         cursor.execute(consultaD, (idS))
                         conn.commit()
                     else:

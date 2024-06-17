@@ -12,83 +12,60 @@ considerar según el grupo de trabajo)
 from Conexion import *
 from funciones import *
 from entidades import *
-
+import getpass
 #Programa principal
 
-op = 0
+op3 = 0
 rol = ""
-while op != 2:
-    op = menu_login()
-    if op == 1:
-        Usuario.usuario = input("Ingrese usuario: ")
-        Usuario.password = input("Ingrese password: ")
-        
-        resultado = Usuario.iniciar_sesion(Usuario.usuario, Usuario.password)
-
-        if resultado[2]== 1:
-            op1 = menu_gestion_empleado()
-           
-            while op1 != 5:
-                op1 = menu_gestion_empleado()
-                if op1 == 1:
-                    print("***Dar de alta un Socio***")
-                    nombre = input("Ingrese el nombre: ")
-                    Usuario.alta(nombre)
-                elif op1 == 2:
-                    print("***Dar de baja un socio***")
-                    Usuario.baja()
-                elif op1 == 3:
-                    print("Modificar los datos de un socio")
-                    Usuario.modificar()
-                elif op1 == 4:
-                    print("***Lista de Socios***\n")
-                    Usuario.lista()  
-                else:
-                    print("FIN!")
-        elif  resultado[2]== 2:
-            op1 = menu_gestion_gerente()
-            if op1 == 1:
-                print("***Dar de alta un Socio***")
-                nombre = input("Ingrese el nombre: ")
-                Usuario.alta(nombre)
-            elif op1 == 2:
-                print("***Dar de baja un socio***")
-                Usuario.baja()
-            elif op1 == 3:
-                print("Modificar los datos de un socio")
-                Usuario.modificar()
-            elif op1 == 4:
-                print("***Lista de Socios***\n")
-                Usuario.lista() 
-            elif op1 == 5:
-                print("Mostrar informe mensual")
-                Usuario.mostrar_informe() 
-            else:
-                print("FIN!")
+while op3 != 2:
+    op3 = menu_login()
+    if op3 == 1:
+        resultado = validar_inicio_sesion()
+        if resultado != None:
+            if resultado[3] == 1:
+                op2 = 0
+                while op2 != 5:
+                    op2 = menu_gestion_empleado()
+                    if op2 == 1:
+                        print("***Dar de alta un Socio***")
+                        nombre = input("Ingrese el nombre: ")
+                        Usuario.alta(nombre)
+                    elif op2 == 2:
+                        print("***Dar de baja un socio***")
+                        Usuario.baja()
+                    elif op2 == 3:
+                        print("Modificar los datos de un socio")
+                        Usuario.modificar()
+                    elif op2 == 4:
+                        print("***Lista de Socios***\n")
+                        Usuario.lista()  
+                    else:
+                        print("Volver al menu login!")
+                        
+            elif  resultado[3]== 2:
+                op2 = 0
+                while op2 != 6:
+                    op2 = menu_gestion_gerente()
+                    if op2 == 1:
+                        print("***Dar de alta un Socio***")
+                        nombre = input("Ingrese el nombre: ")
+                        Usuario.alta(nombre)
+                    elif op2 == 2:
+                        print("***Dar de baja un socio***")
+                        Usuario.baja()
+                    elif op2 == 3:
+                        print("Modificar los datos de un socio")
+                        Usuario.modificar()
+                    elif op2 == 4:
+                        print("***Lista de Socios***\n")
+                        Usuario.lista()  
+                    elif op2 == 5:
+                        print("Mostrar informe mensual")
+                        Usuario.mostrar_informe() 
+                    else:
+                        print("Volver al menu login!")
         else:
-            print("El usuario o el password es incorrecto!")
-
-    else:
-        print("FIN!")
-        break
-    
-
-op1 = 0
-while op1 != 6:
-    op1 = menu_gestion_empleado()
-    if op1 == 1:
-        print("***Dar de alta un Socio***")
-        nombre = input("Ingrese el nombre: ")
-        Usuario.alta(nombre)
-    elif op1 == 2:
-        print("***Dar de baja un socio***")
-        Usuario.baja()
-    elif op1 == 3:
-        print("Modificar los datos de un socio")
-        Usuario.modificar()
-    elif op1 == 4:
-        print("***Lista de Socios***\n")
-        Usuario.lista()  
-    else:
-        print("FIN!")
-
+            op3 = 2
+else:
+    print("FIN!")
+        
