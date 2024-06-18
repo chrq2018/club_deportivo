@@ -146,18 +146,23 @@ def modificar():
         cursor.execute(sql)
         resultado = cursor.fetchall()
         for cliente in resultado:
-            print(f'id cliente: {cliente[0]}, {cliente[1]} {cliente[2]}\n')
+            print(f'id cliente: {cliente[0]}, {cliente[1]} {cliente[2]}, deporte: {cliente[4]}\n')
         idS = input("Ingrese el ID del cliente que desea actualizar: ")
         sql ="SELECT id_cliente from Clientes where id_cliente = ?;"
         cursor.execute(sql, idS)
         resultado = cursor.fetchone()
         if resultado:
-            deporte = input("Ingrese el nuevo deporte: ")
-            sql = "UPDATE Clientes SET deporte = ? where id_cliente = ?;"
-            cursor.execute(sql, (deporte, idS))
-            conn.commit()
+            while True:
+                deporte = input("Ingrese el nuevo deporte: ")
+                if deporte in ['Fútbol', 'Básquet', 'Tenis']:
+                    sql = "UPDATE Clientes SET deporte = ? where id_cliente = ?;"
+                    cursor.execute(sql, (deporte, idS))
+                    conn.commit()
+                    break
+                else:
+                    print("El deporte ingresado debe ser 'Fútbol', 'Básquet' o 'Tenis'")
         else:
-            print("El ID ingresado es incorrecto!!")
+                print("El ID ingresado es incorrecto!!")
         conn.close()
     except Exception as e:
         print("Error!, no se pudo realizar la mofificacion{}".format(e))
@@ -186,7 +191,7 @@ def validar_inicio_sesion():
                 password = getpass.getpass("Ingrese password (cantidad de caracteres debe ser mayor a 2): ")"""
             resultado = iniciar_sesion(usuario, password)
             if resultado:
-                print("Ingreso correcto")
+                print(f"Bienvenido {resultado[1]}. Ingresó al sistema como {resultado[3]}.")
                 cont = 4
             else:
                 print("Los datos ingresados son incorrectos")

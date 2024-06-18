@@ -11,7 +11,6 @@ considerar según el grupo de trabajo)
 
 
 from funciones import *
-
 import getpass
 #Programa principal
 op3 = 0
@@ -94,8 +93,20 @@ while op3 != 2:
                         nombre = input("Ingrese el nombre: ")
                         apellido = input("Ingrese el apellido: ")
                         telefono = input("Ingrese el telefono: ")
-                        deporte = int(input("Ingrese el deporte: "))
-                        tipo_de_cliente = int(input("Ingrese el tipo de cliente: "))
+                        deporte = ''
+                        while True:
+                            deporte = input("Ingrese el nuevo deporte: ")
+                            if deporte in ['Fútbol', 'Básquet', 'Tenis']:
+                                break
+                            else:
+                                print("El deporte ingresado debe ser 'Fútbol', 'Básquet' o 'Tenis'")
+                        tipo_de_cliente = ''
+                        while True:
+                            tipo_de_cliente = input("Ingrese el tipo de cliente: ")
+                            if tipo_de_cliente in ['Socio', 'No socio', 'Invitado']:
+                                break
+                            else:
+                                print("El tipo de cliente ingresado debe ser 'Socio', 'No socio' o 'Invitado'")
                         alta(nombre, apellido, telefono, deporte, tipo_de_cliente)
                     elif op2 == 5:
                         print("***Dar de baja un socio***")
@@ -107,11 +118,12 @@ while op3 != 2:
                                 print("Salio de la opcion Baja")
                                 break    
                     elif op2 == 6:
-                        print("Modificar los datos de un socio")
+                        print("Modificar los datos de un cliente")
                         while True:
                             actualizar = input("\nQuiere actualizar un dato s/n: ")
                             if actualizar.lower() == "s":
                                 modificar()
+                                print('Cliente modificado')
                             else:
                                 print("Salio de la opcion modificar")
                                 break
