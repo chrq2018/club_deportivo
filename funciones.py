@@ -54,12 +54,12 @@ def registrar_pago():
     print("***Registrar pagos***\n")
     mes = 0
     while True:
-        mes = int(input("Ingrese el nuevo deporte: "))
+        mes = int(input("Ingrese el mes: "))
         if mes >= 1 and mes <=12:
             break
         else:
             print("El mes ingresado debe estar entre 1 y 12")
-    anio = int(input("Ingrese el anio: "))
+    anio = int(input("Ingrese el año: "))
     monto = float(input("Ingrese el monto: "))
     tipo_de_cuota = ''
     while True:
@@ -77,8 +77,8 @@ def registrar_pago():
         cursor.execute(sql,valores)
         conn.commit()
         print(cursor.rowcount,"Registro ingresado") 
-        conn.close()
         mostrar_comprobante_pago(id_cliente, mes)
+        conn.close()
     except Exception as e:
         print("Error!, no se pudo registrar el pago{}".format(e))
 

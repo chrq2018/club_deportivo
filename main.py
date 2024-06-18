@@ -62,7 +62,6 @@ while op3 != 2:
                     op2 = menu_gestion_gerente()
                     if op2 == 1:
                         registrar_pago()
-                        mostrar_comprobante_pago(id_cliente, mes)
                     elif op2 == 2:
                         id_cliente = int(input("Ingrese el id_cliente: "))
                         mes = int(input("Ingrese el mes: "))
