@@ -33,16 +33,16 @@ while op3 != 2:
                     elif op2 == 3:
                         alta()
                     elif op2 == 4:
-                        print("***Dar de baja un socio***")
+                        print("***Dar de baja un cliente***")
                         while True:
-                            eliminar = input("\nQuiere eliminar un socio s/n: ")
+                            eliminar = input("\nQuiere eliminar un cliente s/n: ")
                             if eliminar.lower() == "s":
                                 baja()
                             else:
                                 print("Salio de la opcion Baja")
                                 break    
                     elif op2 == 5:
-                        print("Modificar los datos de un socio")
+                        print("Modificar los datos de un cliente")
                         while True:
                             actualizar = input("\nQuiere actualizar un dato s/n: ")
                             if actualizar.lower() == "s":
@@ -51,7 +51,7 @@ while op3 != 2:
                                 print("Salio de la opcion modificar")
                                 break
                     elif op2 == 6:
-                        print("***Lista de Socios***\n")
+                        print("***Lista de clientes***\n")
                         lista()  
                     else:
                         print("Volver al menu login!")
@@ -71,9 +71,9 @@ while op3 != 2:
                     elif op2 == 4:
                         alta()
                     elif op2 == 5:
-                        print("***Dar de baja un socio***")
+                        print("***Dar de baja un cliente***")
                         while True:
-                            eliminar = input("\nQuiere eliminar un socio s/n: ")
+                            eliminar = input("\nQuiere eliminar un cliente s/n: ")
                             if eliminar.lower() == "s":
                                 baja()
                             else:
@@ -90,7 +90,7 @@ while op3 != 2:
                                 print("Salio de la opcion modificar")
                                 break
                     elif op2 == 7:
-                        print("***Lista de Socios***\n")
+                        print("***Lista de clientes***\n")
                         lista()  
                     elif op2 == 8:
                         print("Mostrar informe mensual")

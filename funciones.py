@@ -77,6 +77,8 @@ def registrar_pago():
         cursor.execute(sql,valores)
         conn.commit()
         print(cursor.rowcount,"Registro ingresado") 
+        sql2 = "UPDATE Clientes SET estado = Activo WHERE id_cliente = ?"
+        cursor.execute(sql2, id)
         mostrar_comprobante_pago(id_cliente, mes)
         conn.close()
     except Exception as e:
@@ -122,7 +124,7 @@ def mostrar_pagos():
 
 
 def alta():
-    print("***Dar de alta un cliente***")
+    print("*** Dar de alta un cliente ***")
     nombre = input("Ingrese el nombre: ")
     apellido = input("Ingrese el apellido: ")
     telefono = input("Ingrese el telefono: ")
@@ -208,14 +210,14 @@ def lista():
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        sql = "SELECT * FROM Clientes;"
+        sql = "SELECT * FROM Clientes WHERE estado = Activo;"
         cursor.execute(sql)
         resultado = cursor.fetchall()
         for cliente in resultado:
             print(f'Cliente: {cliente[0]}, Nombre: {cliente[1]}, Apellido: {cliente[2]}, Teléfono: {cliente[3]}, Deporte: {cliente[4]}, Tipo de cliente: {cliente[5]} \n')
         conn.close()
     except Exception as e:
-        print("Error!, no se pudo mostrar los socios{}".format(e))
+        print("Error!, no se pudo mostrar los clientes{}".format(e))
 
 def validar_inicio_sesion():
         cont = 1
