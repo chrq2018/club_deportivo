@@ -142,11 +142,14 @@ def alta():
             break
         else:
             print("El tipo de cliente ingresado debe ser 'Socio', 'No socio' o 'Invitado'")
+    estado = 'Activo'
+    if tipo_de_cliente == 'Invitado':
+        estado = 'NULL'
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        sql = "INSERT INTO Clientes (nombre, apellido, telefono, deporte, tipo_de_cliente) values (?, ?, ?, ?, ?);"
-        valores = (nombre, apellido, telefono, deporte, tipo_de_cliente)
+        sql = "INSERT INTO Clientes (nombre, apellido, telefono, deporte, tipo_de_cliente, estado) values (?, ?, ?, ?, ?, ?);"
+        valores = (nombre, apellido, telefono, deporte, tipo_de_cliente, estado)
         cursor.execute(sql,valores)
         conn.commit()
         print(cursor.rowcount,"Registro ingresado")
@@ -210,11 +213,11 @@ def lista():
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        sql = "SELECT * FROM Clientes WHERE estado = Activo;"
+        sql = "SELECT * FROM Clientes;"
         cursor.execute(sql)
         resultado = cursor.fetchall()
         for cliente in resultado:
-            print(f'Cliente: {cliente[0]}, Nombre: {cliente[1]}, Apellido: {cliente[2]}, Teléfono: {cliente[3]}, Deporte: {cliente[4]}, Tipo de cliente: {cliente[5]} \n')
+            print(f'Cliente: {cliente[0]}, Nombre: {cliente[1]}, Apellido: {cliente[2]}, Teléfono: {cliente[3]}, Deporte: {cliente[4]}, Tipo de cliente: {cliente[5]}, Estado: {cliente[6]}  \n')
         conn.close()
     except Exception as e:
         print("Error!, no se pudo mostrar los clientes{}".format(e))
@@ -242,7 +245,7 @@ def validar_inicio_sesion():
 def iniciar_sesion(usuario, clave):
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        sql ="SELECT * FROM Usuarios where usuario = ? and pass = ?;"
+        sql ="SELECT * FROM Usuarios WHERE usuario = ? AND pass = ?;"
         cursor.execute(sql, (usuario, clave))
         resultado = cursor.fetchone()
         return resultado
