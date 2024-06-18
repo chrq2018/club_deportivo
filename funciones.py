@@ -73,16 +73,17 @@ def mostrar_comprobante_pago(id_cliente, mes):
         valores = (id_cliente, mes)
         cursor.execute(sql, valores)
         resultado = cursor.fetchone()
-        print(resultado)
-        print("*** Comprobante de pago***")
-        print(f"""
-    Cliente: {resultado[5]}
-    Cuota: {resultado[4]}
-    Mes: {resultado[1]}
-    Año: {resultado[2]}
-    Importe: ${round(resultado[3],2)}
-    """)
-        conn.close()
+        if resultado:
+            print("*** Comprobante de pago***")
+            print(f"""
+                Cliente: {resultado[5]}
+                Cuota: {resultado[4]}
+                Mes: {resultado[1]}
+                Año: {resultado[2]}
+                Importe: ${round(resultado[3],2)}
+                """)
+        else: 
+            print(f"No se encontró un comprobante para el cliente {id_cliente} en el mes {mes}")
     except Exception as e:
         print("Error!, no se pudo registrar el pago{}".format(e))
 
@@ -92,10 +93,9 @@ def mostrar_pagos():
         cursor = conn.cursor()
         sql = "SELECT * FROM Pagos;"
         cursor.execute(sql)
-        resultado = cursor.fetchone()
-        while resultado:
-            print(resultado)
-            resultado = cursor.fetchone()
+        resultado = cursor.fetchall()
+        for pago in resultado:
+            print(f'Pago: {pago[0]}, Mes: {pago[1]}, Año: {pago[2]}, Monto: {pago[3]}, Tipo de cuota: {pago[4]}, Cliente: {pago[5]} \n')
         conn.close()
     except Exception as e:
         print("Error!, no se puden mostrar los pagos {}".format(e))
@@ -119,6 +119,11 @@ def baja():
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
+        sql = "SELECT * FROM Clientes;"
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        for cliente in resultado:
+            print(f'id cliente: {cliente[0]}, {cliente[1]} {cliente[2]}\n')
         idS = input("Ingrese el ID del cliente que desea eliminar: ")
         consultaV ="SELECT id_cliente from Clientes where id_cliente = ?;"
         cursor.execute(consultaV, idS)
@@ -137,7 +142,12 @@ def modificar():
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        idS = input("Ingrese el ID del socio que desea actualizar: ")
+        sql = "SELECT * FROM Clientes;"
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        for cliente in resultado:
+            print(f'id cliente: {cliente[0]}, {cliente[1]} {cliente[2]}\n')
+        idS = input("Ingrese el ID del cliente que desea actualizar: ")
         sql ="SELECT id_cliente from Clientes where id_cliente = ?;"
         cursor.execute(sql, idS)
         resultado = cursor.fetchone()
@@ -158,10 +168,9 @@ def lista():
         cursor = conn.cursor()
         sql = "SELECT * FROM Clientes;"
         cursor.execute(sql)
-        resultado = cursor.fetchone()
-        while resultado:
-            print(resultado)
-            resultado = cursor.fetchone()
+        resultado = cursor.fetchall()
+        for cliente in resultado:
+            print(f'Cliente: {cliente[0]}, Nombre: {cliente[1]}, Apellido: {cliente[2]}, Teléfono: {cliente[3]}, Deporte: {cliente[4]}, Tipo de cliente: {cliente[5]} \n')
         conn.close()
     except Exception as e:
         print("Error!, no se pudo mostrar los socios{}".format(e))

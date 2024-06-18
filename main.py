@@ -14,7 +14,6 @@ from funciones import *
 
 import getpass
 #Programa principal
-
 op3 = 0
 rol = ""
 while op3 != 2:
