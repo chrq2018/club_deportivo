@@ -24,7 +24,7 @@ while op3 != 2:
         if resultado != None:
             if resultado[3] == 1:
                 op2 = 0
-                while op2 != 6:
+                while op2 != 7:
                     op2 = menu_gestion_empleado()
                     if op2 == 1:
                         print("***Registrar pagos***\n")
@@ -33,54 +33,13 @@ while op3 != 2:
                         monto = float(input("Ingrese el monto: "))
                         tipo_de_cuota = int(input("Ingrese el tipo de cuota: "))
                         id_cliente = int(input("Ingrese el id_cliente: "))
-                        registrar_pagos(mes, anio, monto, tipo_de_cuota, id_cliente)    
+                        registrar_pago(mes, anio, monto, tipo_de_cuota, id_cliente) 
+                        mostrar_comprobante_pago(id_cliente, mes) 
                     elif op2 == 2:
-                        print("***Dar de alta un Socio***")
-                        nombre = input("Ingrese el nombre: ")
-                        apellido = input("Ingrese el apellido: ")
-                        telefono = input("Ingrese el telefono: ")
-                        deporte = int(input("Ingrese el deporte: "))
-                        tipo_de_cliente = int(input("Ingrese el tipo de cliente: "))
-                        alta(nombre, apellido, telefono, deporte, tipo_de_cliente)
-                    elif op2 == 3:
-                        print("***Dar de baja un socio***")
-                        while True:
-                            eliminar = input("\nQuiere eliminar un socio s/n: ")
-                            if eliminar.lower() == "s":
-                                baja()
-                            else:
-                                print("Salio de la opcion Baja")
-                                break    
-                    elif op2 == 4:
-                        print("Modificar los datos de un socio")
-                        while True:
-                            actualizar = input("\nQuiere actualizar un dato s/n: ")
-                            if actualizar.lower() == "s":
-                                modificar()
-                            else:
-                                print("Salio de la opcion modificar")
-                                break
-                    elif op2 == 5:
-                        print("***Lista de Socios***\n")
-                        lista()  
-                    else:
-                        print("Volver al menu login!")
-
-            elif  resultado[3]== 2:
-                op2 = 0
-                while op2 != 8:
-                    op2 = menu_gestion_gerente()
-                    if op2 == 1:
-                        print("***Registrar pagos***\n")
-                        mes = int(input("Ingrese el mes: "))
-                        anio = int(input("Ingrese el anio: "))
-                        monto = float(input("Ingrese el monto: "))
-                        tipo_de_cuota = int(input("Ingrese el tipo de cuota: "))
                         id_cliente = int(input("Ingrese el id_cliente: "))
-                        registrar_pagos(mes, anio, monto, tipo_de_cuota, id_cliente)
-                    elif op2 == 2:
-                        mostrar_pagos()
-                    if op2 == 3:
+                        mes = int(input("Ingrese el mes: "))
+                        mostrar_comprobante_pago(id_cliente, mes)    
+                    elif op2 == 3:
                         print("***Dar de alta un Socio***")
                         nombre = input("Ingrese el nombre: ")
                         apellido = input("Ingrese el apellido: ")
@@ -109,7 +68,58 @@ while op3 != 2:
                     elif op2 == 6:
                         print("***Lista de Socios***\n")
                         lista()  
+                    else:
+                        print("Volver al menu login!")
+
+            elif  resultado[3]== 2:
+                op2 = 0
+                while op2 != 9:
+                    op2 = menu_gestion_gerente()
+                    if op2 == 1:
+                        print("***Registrar pagos***\n")
+                        mes = int(input("Ingrese el mes: "))
+                        anio = int(input("Ingrese el anio: "))
+                        monto = float(input("Ingrese el monto: "))
+                        tipo_de_cuota = int(input("Ingrese el tipo de cuota: "))
+                        id_cliente = int(input("Ingrese el id_cliente: "))
+                        registrar_pago(mes, anio, monto, tipo_de_cuota, id_cliente)
+                        mostrar_comprobante_pago(id_cliente, mes)
+                    elif op2 == 2:
+                        id_cliente = int(input("Ingrese el id_cliente: "))
+                        mes = int(input("Ingrese el mes: "))
+                        mostrar_comprobante_pago(id_cliente, mes) 
+                    elif op2 == 3:
+                        mostrar_pagos()
+                    elif op2 == 4:
+                        print("***Dar de alta un Socio***")
+                        nombre = input("Ingrese el nombre: ")
+                        apellido = input("Ingrese el apellido: ")
+                        telefono = input("Ingrese el telefono: ")
+                        deporte = int(input("Ingrese el deporte: "))
+                        tipo_de_cliente = int(input("Ingrese el tipo de cliente: "))
+                        alta(nombre, apellido, telefono, deporte, tipo_de_cliente)
+                    elif op2 == 5:
+                        print("***Dar de baja un socio***")
+                        while True:
+                            eliminar = input("\nQuiere eliminar un socio s/n: ")
+                            if eliminar.lower() == "s":
+                                baja()
+                            else:
+                                print("Salio de la opcion Baja")
+                                break    
+                    elif op2 == 6:
+                        print("Modificar los datos de un socio")
+                        while True:
+                            actualizar = input("\nQuiere actualizar un dato s/n: ")
+                            if actualizar.lower() == "s":
+                                modificar()
+                            else:
+                                print("Salio de la opcion modificar")
+                                break
                     elif op2 == 7:
+                        print("***Lista de Socios***\n")
+                        lista()  
+                    elif op2 == 8:
                         print("Mostrar informe mensual")
                         mostrar_informe() 
                     else:

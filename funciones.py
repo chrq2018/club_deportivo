@@ -21,42 +21,67 @@ def menu_login():
 def menu_gestion_empleado():
     print()
     opc = 0
-    while opc < 1 or opc > 7:
+    while opc < 1 or opc > 8:
         print()
         print('1) Registrar pagos')
-        print('2) Alta clientes')
-        print('3) Baja clientes')
-        print('4) Modificar clientes')
-        print('5) Listar clientes')
-        print('6) Volver al menu login!')
+        print('2) Mostrar comprobante de pago')
+        print('3) Alta clientes')
+        print('4) Baja clientes')
+        print('5) Modificar clientes')
+        print('6) Listar clientes')
+        print('7) Volver al menu login!')
         opc = int(input('Elija una opción correcta: '))
     return opc
 
 def menu_gestion_gerente():
     print()
     opc = 0
-    while opc < 1 or opc > 8:
+    while opc < 1 or opc > 10:
         print()
         print('1) Registrar pagos')
-        print('2) Mostrar pagos')
-        print('3) Alta clientes')
-        print('4) Baja clientes')
-        print('5) Modificar clientes')
-        print('6) Listar clientes')
-        print('7) Imprimir Informes')
-        print('8) Volver al menu login!')
+        print('2) Mostrar comprobante de pago')
+        print('3) Mostrar pagos')
+        print('4) Alta clientes')
+        print('5) Baja clientes')
+        print('6) Modificar clientes')
+        print('7) Listar clientes')
+        print('8) Imprimir Informes')
+        print('9) Volver al menu login!')
         opc = int(input('Elija una opción correcta: '))
     return opc
         
-def registrar_pagos(mes, anio, monto, tipo_de_cuota, id_cliente):
+def registrar_pago(mes, anio, monto, tipo_de_cuota, cliente):
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
         sql = "insert into Pagos (Mes, Anio, Monto, Tipo_de_cuota, Id_cliente) values (?, ?, ?, ?, ?);"
-        valores = (mes, anio, monto, tipo_de_cuota, id_cliente)
+        valores = (mes, anio, monto, tipo_de_cuota, cliente)
         cursor.execute(sql,valores)
         conn.commit()
-        print(cursor.rowcount,"Registro ingresado")
+        print(cursor.rowcount,"Registro ingresado") 
+        conn.close()
+    except Exception as e:
+        print("Error!, no se pudo registrar el pago{}".format(e))
+
+def mostrar_comprobante_pago(id_cliente, mes):
+    try:
+        conn = pyodbc.connect(conexion_sql_server())
+        cursor = conn.cursor()
+        sql = f"""select *
+                 from Pagos 
+                 where Id_cliente = ? and mes = ? ;"""
+        valores = (id_cliente, mes)
+        cursor.execute(sql, valores)
+        resultado = cursor.fetchone()
+        print(resultado)
+        print("*** Comprobante de pago***")
+        print(f"""
+    Cliente: {resultado[5]}
+    Cuota: {resultado[4]}
+    Mes: {resultado[1]}
+    Año: {resultado[2]}
+    Importe: ${round(resultado[3],2)}
+    """)
         conn.close()
     except Exception as e:
         print("Error!, no se pudo registrar el pago{}".format(e))
@@ -73,7 +98,9 @@ def mostrar_pagos():
             resultado = cursor.fetchone()
         conn.close()
     except Exception as e:
-        print("Error!, no se pudo mostrar los pagos {}".format(e))
+        print("Error!, no se puden mostrar los pagos {}".format(e))
+
+
 
 def alta(nombre, apellido, telefono, deporte, tipo_de_cliente):
     try:
