@@ -38,13 +38,7 @@ while op3 != 2:
                         mes = int(input("Ingrese el mes: "))
                         mostrar_comprobante_pago(id_cliente, mes)    
                     elif op2 == 3:
-                        print("***Dar de alta un Socio***")
-                        nombre = input("Ingrese el nombre: ")
-                        apellido = input("Ingrese el apellido: ")
-                        telefono = input("Ingrese el telefono: ")
-                        deporte = int(input("Ingrese el deporte: "))
-                        tipo_de_cliente = int(input("Ingrese el tipo de cliente: "))
-                        alta(nombre, apellido, telefono, deporte, tipo_de_cliente)
+                        alta()
                     elif op2 == 4:
                         print("***Dar de baja un socio***")
                         while True:
@@ -89,25 +83,7 @@ while op3 != 2:
                     elif op2 == 3:
                         mostrar_pagos()
                     elif op2 == 4:
-                        print("***Dar de alta un Socio***")
-                        nombre = input("Ingrese el nombre: ")
-                        apellido = input("Ingrese el apellido: ")
-                        telefono = input("Ingrese el telefono: ")
-                        deporte = ''
-                        while True:
-                            deporte = input("Ingrese el nuevo deporte: ")
-                            if deporte in ['Fútbol', 'Básquet', 'Tenis']:
-                                break
-                            else:
-                                print("El deporte ingresado debe ser 'Fútbol', 'Básquet' o 'Tenis'")
-                        tipo_de_cliente = ''
-                        while True:
-                            tipo_de_cliente = input("Ingrese el tipo de cliente: ")
-                            if tipo_de_cliente in ['Socio', 'No socio', 'Invitado']:
-                                break
-                            else:
-                                print("El tipo de cliente ingresado debe ser 'Socio', 'No socio' o 'Invitado'")
-                        alta(nombre, apellido, telefono, deporte, tipo_de_cliente)
+                        alta()
                     elif op2 == 5:
                         print("***Dar de baja un socio***")
                         while True:
