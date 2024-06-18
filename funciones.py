@@ -1,5 +1,6 @@
 import pyodbc
 import getpass
+import datetime
 
 def conexion_sql_server():
     try:
@@ -11,17 +12,18 @@ def conexion_sql_server():
 def menu_login():
     print()
     opc = 0
-    while opc < 1 or opc > 2:
+    while True:
         print("****Login****")
         print('1) Inicio')
         print('2) Salir')
-        opc = int(input('Elija una opción correcta: '))
-    return opc
+        opc = input('Elija una opción correcta: ')
+        if opc == '1' or opc == '2':
+            return int(opc)
 
 def menu_gestion_empleado():
     print()
     opc = 0
-    while opc < 1 or opc > 8:
+    while True:
         print()
         print('1) Registrar pagos')
         print('2) Mostrar comprobante de pago')
@@ -30,13 +32,14 @@ def menu_gestion_empleado():
         print('5) Modificar clientes')
         print('6) Listar clientes')
         print('7) Volver al menu login!')
-        opc = int(input('Elija una opción correcta: '))
-    return opc
+        opc = input('Elija una opción correcta: ')
+        if opc in ['1','2','3','4','5','6','7']:
+            return int(opc)
 
 def menu_gestion_gerente():
     print()
     opc = 0
-    while opc < 1 or opc > 10:
+    while True:
         print()
         print('1) Registrar pagos')
         print('2) Mostrar comprobante de pago')
@@ -47,20 +50,41 @@ def menu_gestion_gerente():
         print('7) Listar clientes')
         print('8) Imprimir Informes')
         print('9) Volver al menu login!')
-        opc = int(input('Elija una opción correcta: '))
-    return opc
+        opc = input('Elija una opción correcta: ')
+        if opc in ['1','2','3','4','5','6','7','8','9']:
+            return int(opc)
+
+def input_validado(mensaje):
+    valor = ''
+    while True:
+        valor = input(mensaje)
+        if valor != '':
+            return valor
         
 def registrar_pago():
     print("***Registrar pagos***\n")
     mes = 0
     while True:
-        mes = int(input("Ingrese el mes: "))
-        if mes >= 1 and mes <=12:
-            break
-        else:
+        try:
+            mes = int(input("Ingrese el mes: "))
+            if mes >= 1 and mes <=12:
+                break
+            else:
+                print("El mes ingresado debe estar entre 1 y 12")
+        except:
             print("El mes ingresado debe estar entre 1 y 12")
-    anio = int(input("Ingrese el año: "))
-    monto = float(input("Ingrese el monto: "))
+    anio = 0
+    while True:
+        try:
+            anio = int(input("Ingrese el año: "))
+            fecha_actual = datetime.datetime.now()
+            anio_actual = fecha_actual.year
+            if anio > 1900 and anio <= anio_actual:
+                break
+            else:
+                print("El año ingresado debe ser un número mayor a 1900 y no mayor al año actual")
+        except:
+            print("El año ingresado debe ser un número")
     tipo_de_cuota = ''
     while True:
         tipo_de_cuota = input("Ingrese el tipo de cuota: ")
@@ -69,16 +93,29 @@ def registrar_pago():
         else:
             print("El tipo de cuota ingresado debe ser 'Deportiva' o 'Social'")
     id_cliente = int(input("Ingrese el id_cliente: "))
+    monto = 0
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
+        sqlId = "SELECT tipo_de_cliente FROM Clientes WHERE id_cliente = ?;"
+        cursor.execute(sqlId, id_cliente)
+        cliente = cursor.fetchone()[0]
+        if cliente == 'Socio' and tipo_de_cuota == 'Deportiva':
+            monto = 7500
+        if cliente == 'Socio' and tipo_de_cuota == 'Social':
+            monto = 10000
+        if cliente == 'No socio' and tipo_de_cuota == 'Deportiva':
+            monto = 12500
+        if cliente == 'No socio' and tipo_de_cuota == 'Social':
+            monto = 15000
         sql = "INSERT INTO Pagos (mes, anio, monto, tipo_de_cuota, id_cliente) values (?, ?, ?, ?, ?);"
         valores = (mes, anio, monto, tipo_de_cuota, id_cliente)
         cursor.execute(sql,valores)
         conn.commit()
         print(cursor.rowcount,"Registro ingresado") 
-        sql2 = "UPDATE Clientes SET estado = Activo WHERE id_cliente = ?"
-        cursor.execute(sql2, id)
+        if monto != 0:
+            sql2 = "UPDATE Clientes SET estado = 'Activo' WHERE id_cliente = ?"
+            cursor.execute(sql2, id_cliente)
         mostrar_comprobante_pago(id_cliente, mes)
         conn.close()
     except Exception as e:
@@ -101,7 +138,7 @@ def mostrar_comprobante_pago(id_cliente, mes):
                 Cuota: {resultado[4]}
                 Mes: {resultado[1]}
                 Año: {resultado[2]}
-                Importe: ${round(resultado[3],2)}
+                Importe: ${resultado[3]}
                 """)
         else: 
             print(f"No se encontró un comprobante para el cliente {id_cliente} en el mes {mes}")
@@ -171,7 +208,7 @@ def baja():
         cursor.execute(consultaV, idS)
         resultado = cursor.fetchone()
         if resultado:
-            consultaD = "UPDATE Clientes SET estado = Inactivo WHERE id_cliente = ?;"
+            consultaD = "UPDATE Clientes SET estado = 'Inactivo' WHERE id_cliente = ?;"
             cursor.execute(consultaD, (idS))
             conn.commit()
         else:
@@ -251,5 +288,35 @@ def iniciar_sesion(usuario, clave):
         return resultado
 
 def mostrar_informe():
-    pass 
-                                 
+    mes = 0
+    while True:
+        mes = int(input("Ingrese el mes: "))
+        if mes >= 1 and mes <=12:
+            break
+        else:
+            print("El mes ingresado debe estar entre 1 y 12")
+    anio = 0
+    while True:
+        try:
+            anio = int(input("Ingrese el año: "))
+            fecha_actual = datetime.datetime.now()
+            anio_actual = fecha_actual.year
+            if anio > 1900 and anio <= anio_actual:
+                break
+            else:
+                print("El año ingresado debe ser un número mayor a 1900 y no mayor al año actual")
+        except:
+            print("El año ingresado debe ser un número")
+    try:
+        conn = pyodbc.connect(conexion_sql_server())
+        cursor = conn.cursor()
+        sql = "SELECT SUM(monto) FROM Pagos WHERE mes = ? AND anio = ?;"
+        valores = (mes, anio)
+        cursor.execute(sql, valores)
+        resultado = cursor.fetchone()[0]
+        if resultado:
+            print(f'El total de las cuotas del mes {mes} en el año {anio} es de: ${resultado}')
+        else:
+            print(f"No se encontraron cuotas en el {mes} del año {anio}")
+    except Exception as e:
+        print("Error!, no se pudo mostrar los clientes{}".format(e))
