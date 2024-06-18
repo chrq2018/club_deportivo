@@ -50,16 +50,35 @@ def menu_gestion_gerente():
         opc = int(input('Elija una opción correcta: '))
     return opc
         
-def registrar_pago(mes, anio, monto, tipo_de_cuota, cliente):
+def registrar_pago():
+    print("***Registrar pagos***\n")
+    mes = 0
+    while True:
+        mes = int(input("Ingrese el nuevo deporte: "))
+        if mes >= 1 and mes <=12:
+            break
+        else:
+            print("El mes ingresado debe estar entre 1 y 12")
+    anio = int(input("Ingrese el anio: "))
+    monto = float(input("Ingrese el monto: "))
+    tipo_de_cuota = ''
+    while True:
+        tipo_de_cuota = input("Ingrese el tipo de cuota: ")
+        if tipo_de_cuota in ['Deportiva', 'Social']:
+            break
+        else:
+            print("El tipo de cuota ingresado debe ser 'Deportiva' o 'Social'")
+    id_cliente = int(input("Ingrese el id_cliente: "))
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
         sql = "INSERT INTO Pagos (mes, anio, monto, tipo_de_cuota, id_cliente) values (?, ?, ?, ?, ?);"
-        valores = (mes, anio, monto, tipo_de_cuota, cliente)
+        valores = (mes, anio, monto, tipo_de_cuota, id_cliente)
         cursor.execute(sql,valores)
         conn.commit()
         print(cursor.rowcount,"Registro ingresado") 
         conn.close()
+        mostrar_comprobante_pago(id_cliente, mes)
     except Exception as e:
         print("Error!, no se pudo registrar el pago{}".format(e))
 
@@ -147,7 +166,7 @@ def baja():
         cursor.execute(consultaV, idS)
         resultado = cursor.fetchone()
         if resultado:
-            consultaD = "DELETE FROM Clientes where id_cliente = ?;"
+            consultaD = "UPDATE Clientes SET estado = Inactivo WHERE id_cliente = ?;"
             cursor.execute(consultaD, (idS))
             conn.commit()
         else:

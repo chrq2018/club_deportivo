@@ -25,14 +25,7 @@ while op3 != 2:
                 while op2 != 7:
                     op2 = menu_gestion_empleado()
                     if op2 == 1:
-                        print("***Registrar pagos***\n")
-                        mes = int(input("Ingrese el mes: "))
-                        anio = int(input("Ingrese el anio: "))
-                        monto = float(input("Ingrese el monto: "))
-                        tipo_de_cuota = int(input("Ingrese el tipo de cuota: "))
-                        id_cliente = int(input("Ingrese el id_cliente: "))
-                        registrar_pago(mes, anio, monto, tipo_de_cuota, id_cliente) 
-                        mostrar_comprobante_pago(id_cliente, mes) 
+                        registrar_pago() 
                     elif op2 == 2:
                         id_cliente = int(input("Ingrese el id_cliente: "))
                         mes = int(input("Ingrese el mes: "))
@@ -68,13 +61,7 @@ while op3 != 2:
                 while op2 != 9:
                     op2 = menu_gestion_gerente()
                     if op2 == 1:
-                        print("***Registrar pagos***\n")
-                        mes = int(input("Ingrese el mes: "))
-                        anio = int(input("Ingrese el anio: "))
-                        monto = float(input("Ingrese el monto: "))
-                        tipo_de_cuota = int(input("Ingrese el tipo de cuota: "))
-                        id_cliente = int(input("Ingrese el id_cliente: "))
-                        registrar_pago(mes, anio, monto, tipo_de_cuota, id_cliente)
+                        registrar_pago()
                         mostrar_comprobante_pago(id_cliente, mes)
                     elif op2 == 2:
                         id_cliente = int(input("Ingrese el id_cliente: "))

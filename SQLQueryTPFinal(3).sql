@@ -10,7 +10,8 @@ CREATE TABLE Clientes (
     apellido NVARCHAR(100) NOT NULL,
     telefono NVARCHAR(20) NOT NULL,
     deporte NVARCHAR(20) NULL CHECK (Deporte IN (NULL, 'Fútbol', 'Tenis', 'Básquet')),
-    tipo_de_cliente NVARCHAR(20) NOT NULL CHECK (tipo_de_cliente IN ('Socio', 'No socio', 'Invitado'))
+    tipo_de_cliente NVARCHAR(20) NOT NULL CHECK (tipo_de_cliente IN ('Socio', 'No socio', 'Invitado')),
+    estado NVARCHAR(20) DEFAULT 'Activo'
 );
 
 
