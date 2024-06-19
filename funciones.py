@@ -76,6 +76,7 @@ def menu_principal(rol):
                 eliminar = input("\nQuiere eliminar un cliente s/n: ")
                 if eliminar.lower() == "s":
                     baja()
+                    break
                 else:
                     print("Salio de la opcion Baja")
                     break    
