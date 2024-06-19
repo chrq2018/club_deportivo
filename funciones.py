@@ -361,11 +361,12 @@ def iniciar_sesion(usuario, clave):
 def mostrar_informe():
     mes = 0
     while True:
-        mes = int(input("Ingrese el mes: "))
-        if mes >= 1 and mes <=12:
-            break
-        else:
-            print("El mes ingresado debe estar entre 1 y 12")
+        try:
+            mes = int(input("Ingrese el mes: "))
+            if mes >= 1 and mes <=12:
+                break
+        except:
+            print("El mes ingresado debe ser un número entre 1 y 12")       
     anio = 0
     while True:
         try:
