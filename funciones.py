@@ -85,21 +85,20 @@ def registrar_pago():
                 print("El año ingresado debe ser un número mayor a 1900 y no mayor al año actual")
         except:
             print("El año ingresado debe ser un número")
-    tipo_de_cuota = ''
-    while True:
-        tipo_de_cuota = input("Ingrese el tipo de cuota: ")
-        if tipo_de_cuota in ['Deportiva', 'Social']:
-            break
-        else:
-            print("El tipo de cuota ingresado debe ser 'Deportiva' o 'Social'")
     id_cliente = int(input("Ingrese el id_cliente: "))
+    tipo_de_cuota = 'NULL'
     monto = 0
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        sqlId = "SELECT tipo_de_cliente FROM Clientes WHERE id_cliente = ?;"
+        sqlId = "SELECT tipo_de_cliente, deporte FROM Clientes WHERE id_cliente = ?;"
         cursor.execute(sqlId, id_cliente)
-        cliente = cursor.fetchone()[0]
+        cliente, deporte = cursor.fetchone()
+        print(cliente, deporte)
+        if deporte and cliente != 'Invitado':
+            tipo_de_cuota = 'Deportiva'
+        else:
+            tipo_de_cuota = 'Social'
         if cliente == 'Socio' and tipo_de_cuota == 'Deportiva':
             monto = 7500
         if cliente == 'Socio' and tipo_de_cuota == 'Social':
@@ -152,6 +151,7 @@ def mostrar_pagos():
         sql = "SELECT * FROM Pagos;"
         cursor.execute(sql)
         resultado = cursor.fetchall()
+        print("Listado de todos los pagos:\n")
         for pago in resultado:
             print(f'Pago: {pago[0]}, Mes: {pago[1]}, Año: {pago[2]}, Monto: {pago[3]}, Tipo de cuota: {pago[4]}, Cliente: {pago[5]} \n')
         conn.close()
@@ -204,13 +204,14 @@ def baja():
         for cliente in resultado:
             print(f'id cliente: {cliente[0]}, {cliente[1]} {cliente[2]}\n')
         idS = input("Ingrese el ID del cliente que desea eliminar: ")
-        consultaV ="SELECT id_cliente from Clientes where id_cliente = ?;"
+        consultaV ="SELECT id_cliente, nombre, apellido from Clientes where id_cliente = ?;"
         cursor.execute(consultaV, idS)
-        resultado = cursor.fetchone()
+        idCliente, nombreCliente, apellidoCliente = cursor.fetchone()
         if resultado:
             consultaD = "UPDATE Clientes SET estado = 'Inactivo' WHERE id_cliente = ?;"
-            cursor.execute(consultaD, (idS))
+            cursor.execute(consultaD, (idCliente))
             conn.commit()
+            print(f"El cliente {nombreCliente} {apellidoCliente} ha pasado a ser inactivo.")
         else:
             print("El ID ingresado es incorrecto!!")
         conn.close()
@@ -258,6 +259,28 @@ def lista():
         conn.close()
     except Exception as e:
         print("Error!, no se pudo mostrar los clientes{}".format(e))
+
+def ver_cliente():
+    while True:
+        try:
+            idCliente = int(input("Ingrese el id del cliente: "))
+            if idCliente:
+                break
+        except Exception as e:
+            print("Ingrese un id válido: ")
+    try:
+        conn = pyodbc.connect(conexion_sql_server())
+        cursor = conn.cursor()
+        sql ="SELECT * from Clientes where id_cliente = ?;"
+        cursor.execute(sql, idCliente)
+        resultado = cursor.fetchone()
+        if resultado:
+            print(f'Cliente: {resultado[0]}, Nombre: {resultado[1]}, Apellido: {resultado[2]}, Teléfono: {resultado[3]}, Deporte: {resultado[4]}, Tipo de cliente: {resultado[5]}, Estado: {resultado[6]}  \n')
+        else:
+            print(f"No se ha encontrado cliente con el id: {idCliente}")
+    except:
+        print("Error!, no se pudo mostrar el cliente{}".format(e))
+
 
 def validar_inicio_sesion():
         cont = 1
@@ -315,8 +338,8 @@ def mostrar_informe():
         cursor.execute(sql, valores)
         resultado = cursor.fetchone()[0]
         if resultado:
-            print(f'El total de las cuotas del mes {mes} en el año {anio} es de: ${resultado}')
+            print(f'El dinero recaudado en el mes {mes} del año {anio} es de: ${resultado}')
         else:
             print(f"No se encontraron cuotas en el {mes} del año {anio}")
     except Exception as e:
-        print("Error!, no se pudo mostrar los clientes{}".format(e))
+        print("Error!, no se pudo mostrar el informe{}".format(e))

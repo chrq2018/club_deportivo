@@ -16,6 +16,7 @@ import getpass
 op3 = 0
 rol = ""
 while op3 != 2:
+    print("Bienvenido al sistema de gestión administrativo para el Club")
     op3 = menu_login()
     if op3 == 1:
         resultado = validar_inicio_sesion()

@@ -20,7 +20,7 @@ CREATE TABLE Pagos (
     mes INT NOT NULL,
     anio INT NOT NULL,
     monto DECIMAL(10, 2) NOT NULL,
-    tipo_de_cuota NVARCHAR(20) NOT NULL CHECK (tipo_de_cuota IN ('Social', 'Deportiva')),
+    tipo_de_cuota NVARCHAR(20) NOT NULL CHECK (tipo_de_cuota IN (NULL, 'Social', 'Deportiva')),
     id_cliente INT NOT NULL,
     CONSTRAINT FK_Pagos_Clientes FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente)
 );
