@@ -147,6 +147,10 @@ def registrar_pago():
         if cliente == 'Invitado':
             print("Los invitados no pueden registrar pagos.")
             return
+        if deporte != 'NULL':
+            tipo_de_cuota = 'Social'
+        else:
+            tipo_de_cuota = 'Deportiva'
         if cliente == 'Socio' and tipo_de_cuota == 'Deportiva':
             monto = 7500
         if cliente == 'Socio' and tipo_de_cuota == 'Social':
@@ -163,6 +167,7 @@ def registrar_pago():
         if monto != 0:
             sql2 = "UPDATE Clientes SET estado = 'Activo' WHERE id_cliente = ?"
             cursor.execute(sql2, id_cliente)
+            conn.commit()
         mostrar_comprobante_pago(id_cliente, mes)
         conn.close()
     except Exception as e:
