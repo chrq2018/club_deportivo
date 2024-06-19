@@ -310,14 +310,17 @@ def lista():
 
 def ver_cliente():
     try:
-        idS = input("Ingrese el apellido o nombre del cliente que desea buscar: ")
+        idS = input("\nIngrese el apellido o nombre del cliente que desea buscar: ")
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
         sql = "SELECT * FROM Clientes WHERE apellido LIKE ? OR nombre LIKE ?;"
         cursor.execute(sql, ('%' + idS + '%', '%' + idS + '%'))
         resultado = cursor.fetchall()
-        for cliente in resultado:
-            print(f'\nCliente: {cliente[0]}, Nombre: {cliente[1]}, Apellido: {cliente[2]}, Teléfono: {cliente[3]}, Deporte: {cliente[4]}, Tipo de cliente: {cliente[5]}, Estado: {cliente[6]}  \n')
+        if resultado:
+            for cliente in resultado:
+                print(f'\nCliente: {cliente[0]}, Nombre: {cliente[1]}, Apellido: {cliente[2]}, Teléfono: {cliente[3]}, Deporte: {cliente[4]}, Tipo de cliente: {cliente[5]}, Estado: {cliente[6]}  \n')
+        else:
+            print(f"No se ha encontrado al cliente: {idS}")
         conn.close()
     except Exception as e:
         print("Error!, no se pudo mostrar a los clientes{}".format(e))
