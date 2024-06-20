@@ -35,19 +35,21 @@ Este archivo contiene todas las funciones necesarias para la operación del sist
 
 #### Funciones Principales
 
-1. **Conexión a la Base de Datos**: Establece una conexión con el servidor SQL Server para realizar operaciones de consulta y manipulación de datos.
+1. **Conexión a la Base de Datos**: 
 
-2. **Validación y Inicio de Sesión**:
+   - **conexion_sql_server**: Establece una conexión con el servidor SQL Server para realizar operaciones de consulta y manipulación de datos.
+
+3. **Validación y Inicio de Sesión**:
 
    - **validar_inicio_sesion**: Valida las credenciales de inicio de sesión del usuario.
    - **iniciar_sesion**: Verifica las credenciales contra la base de datos.
 
-3. **Menús de Navegación**:
+4. **Menús de Navegación**:
 
    - **menu_login**: Muestra el menú de inicio de sesión.
    - **menu_principal**: Muestra el menú principal adaptado según el rol del usuario.
 
-4. **Gestión de Clientes**:
+5. **Gestión de Clientes**:
 
    - **alta**: Permite dar de alta a nuevos clientes en el sistema.
    - **baja**: Marca a los clientes como inactivos en el sistema.
@@ -55,20 +57,20 @@ Este archivo contiene todas las funciones necesarias para la operación del sist
    - **lista**: Muestra un listado de todos los clientes.
    - **ver_cliente**: Permite buscar clientes por nombre o apellido.
 
-5. **Gestión de Pagos**:
+6. **Gestión de Pagos**:
 
    - **registrar_pago**: Registra pagos de cuotas mensuales para los clientes.
    - **mostrar_comprobante_pago**: Genera y muestra un comprobante de pago.
    - **mostrar_pagos**: Muestra un listado de todos los pagos registrados.
 
-6. **Generación de Informes**:
+7. **Generación de Informes**:
 
    - **mostrar_informe**: Genera un informe de la recaudación mensual basado en los pagos registrados.
 
 ## Roles y Responsabilidades
 
+- **Christian Quiroga**: Responsable principal del desarrollo del sistema e implementación de las funcionalidades.
 - **Dante Maestrelli**: Responsable de la documentación del proyecto, incluyendo la creación de este documento.
-- **Christian Quiroga**: Responsable principal del desarrollo del sistema, implementando las funcionalidades y asegurando su correcto funcionamiento.
 - **Martín Miselli**: Responsable del testeo del sistema, verificando que todas las funciones operen correctamente y realizando pruebas exhaustivas para asegurar la calidad del producto final.
 - _Importante: Si bien existieron roles definidos, todos participamos activamente en todos los procesos._
 
