@@ -69,6 +69,7 @@ Este archivo contiene todas las funciones necesarias para la operación del sist
 - **Dante Maestrelli**: Responsable de la documentación del proyecto, incluyendo la creación de este documento.
 - **Christian Quiroga**: Responsable principal del desarrollo del sistema, implementando las funcionalidades y asegurando su correcto funcionamiento.
 - **Martín Miselli**: Responsable del testeo del sistema, verificando que todas las funciones operen correctamente y realizando pruebas exhaustivas para asegurar la calidad del producto final.
+- _Importante_: Si bien existieron roles definidos, todos participamos activamente en todos los procesos.
 
 ## Conclusión
 
