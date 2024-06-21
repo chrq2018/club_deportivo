@@ -189,11 +189,11 @@ def mostrar_comprobante_pago(id_cliente, mes):
             print("------------------------------")
             print("|*** COMPROBANTE DE PAGO  ***|")
             print("------------------------------")
-            print("|Cliente: {:<19}|".format(resultado[0]))
-            print("|Cuota:   {:<19}|".format(resultado[4]))
-            print("|Mes:     {:<19}|".format(resultado[1]))
-            print("|Año:     {:<19}|".format(resultado[2]))
-            print("|Importe: {:<19}|".format(resultado[3]))
+            print("|Cliente:     {:<15}|".format(resultado[0]))
+            print("|Cuota:       {:<15}|".format(resultado[4]))
+            print("|Mes:         {:<15}|".format(resultado[1]))
+            print("|Año:         {:<15}|".format(resultado[2]))
+            print("|Importe:     {:<15}|".format(resultado[3]))
             print("------------------------------")
         else: 
             print(f"No se encontró un comprobante para el cliente {id_cliente} en el mes {mes}")
@@ -208,8 +208,13 @@ def mostrar_pagos():
         cursor.execute(sql)
         resultado = cursor.fetchall()
         print("Listado de todos los pagos:\n")
+        print("---------------------------------------------------------------")
+        print("|Pago  |  Mes |  Año  |   Monto   |   Tipo de cuota  | Cliente|")
+        print("---------------------------------------------------------------")
         for pago in resultado:
-            print(f'Pago: {pago[0]}, Mes: {pago[1]}, Año: {pago[2]}, Monto: {pago[3]}, Tipo de cuota: {pago[4]}, Cliente: {pago[5]} \n')
+            #print(f'Pago: {pago[0]}, Mes: {pago[1]}, Año: {pago[2]}, Monto: {pago[3]}, Tipo de cuota: {pago[4]}, Cliente: {pago[5]} \n')
+            print("|{:^5}|{:^6}|{:^8}|{:^11}|{:^18}|{:^8}|".format(pago[0],pago[1],pago[2],pago[3],pago[4],pago[5]))
+            print("---------------------------------------------------------------")
         conn.close()
     except Exception as e:
         print("Error!, no se puden mostrar los pagos {}".format(e))
@@ -310,14 +315,15 @@ def lista():
         sql = "SELECT * FROM Clientes;"
         cursor.execute(sql)
         resultado = cursor.fetchall()
-        print("-------------------------------------------------------------------------------------------")
-        print("|Cliente |  Nombre  |   Apellido  |   Telefono  |   Deporte   |  Tipo de cuota  |  Estado  |")
+        print("----------------------------------------------------------------------------------------------------")
+        print("|Cliente |     Nombre     |   Apellido    |   Telefono  |   Deporte   |  Tipo de cuota  |  Estado  |")
+        print("----------------------------------------------------------------------------------------------------")
         for cliente in resultado:
             if cliente[4] == None:
                 cliente[4] = ""
-            print("-------------------------------------------------------------------------------------------")
-            print("|{:^11}{:<12}{:<14}{:<14}{:<13}{:<18}{:<9}|".format(cliente[0],cliente[1],cliente[2],cliente[3],cliente[4],cliente[5],cliente[6]))
-        print("-------------------------------------------------------------------------------------------")
+           
+            print("|{:^8}|{:^16}|{:^15}|{:^13}|{:^12}|{:^18}|{:^10}|".format(cliente[0],cliente[1],cliente[2],cliente[3],cliente[4],cliente[5],cliente[6]))
+        print("----------------------------------------------------------------------------------------------------")
         conn.close()
     except Exception as e:
         print("Error!, no se pudo mostrar los clientes{}".format(e))
