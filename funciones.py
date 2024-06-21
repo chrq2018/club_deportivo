@@ -15,7 +15,7 @@ def menu_login():
     opc = 0
     while True:
         print("***************************")
-        print("*          LOGIN         *")
+        print("*          LOGIN          *")
         print("***************************")
         print()
         print('1) Inicio')
@@ -76,7 +76,7 @@ def menu_principal(rol):
         elif op2 == 2:
             alta()
         elif op2 == 3:
-            print("***Dar de baja un cliente***")
+            print("***   DAR DE BAJA UN CLIENTE   ***")
             while True:
                 eliminar = input("\nQuiere eliminar un cliente s/n: ")
                 if eliminar.lower() == "s":
@@ -86,7 +86,7 @@ def menu_principal(rol):
                     print("Salio de la opcion Baja")
                     break    
         elif op2 == 4:
-            print("Modificar los datos de un cliente")
+            print("***   MODIFICAR DATOS DE UN CLIENTE   ***")
             while True:
                 actualizar = input("\nQuiere actualizar un dato s/n: ")
                 if actualizar.lower() == "s":
@@ -97,11 +97,11 @@ def menu_principal(rol):
         elif op2 == 5:
             ver_cliente()
         elif op2 == 6:
-            print("***Lista de clientes***\n")
             lista() 
         elif op2 ==7:
              registrar_pago()
         elif op2 ==8:
+            print("***   MOSTRAR COMPROBANTE   ***")
             id_cliente = int(input("Ingrese el id_cliente: "))
             mes = int(input("Ingrese el mes: "))
             mostrar_comprobante_pago(id_cliente, mes)
@@ -114,7 +114,7 @@ def input_validado(mensaje):
             return valor
         
 def registrar_pago():
-    print("***Registrar pagos***\n")
+    print("***   REGISTRAR PAGOS   ***\n")
     mes = 0
     while True:
         try:
@@ -207,7 +207,9 @@ def mostrar_pagos():
         sql = "SELECT * FROM Pagos;"
         cursor.execute(sql)
         resultado = cursor.fetchall()
-        print("Listado de todos los pagos:\n")
+        print()
+        print("---------------------------------------------------------------")
+        print("|           ***   LISTADO DE TODOS LOS PAGOS   ***            |")
         print("---------------------------------------------------------------")
         print("|Pago  |  Mes |  Año  |   Monto   |   Tipo de cuota  | Cliente|")
         print("---------------------------------------------------------------")
@@ -222,7 +224,8 @@ def mostrar_pagos():
 
 
 def alta():
-    print("*** Dar de alta un cliente ***")
+    print()
+    print("*** DAR DE ALTA UN CLIENTE ***")
     nombre = input("Ingrese el nombre: ")
     apellido = input("Ingrese el apellido: ")
     telefono = input("Ingrese el telefono: ")
@@ -286,8 +289,14 @@ def modificar():
         sql = "SELECT * FROM Clientes;"
         cursor.execute(sql)
         resultado = cursor.fetchall()
+        print("---------------------------------------------------------")
+        print("|Cliente |     Nombre     |   Apellido    |   Deporte   |")
+        print("---------------------------------------------------------")
         for cliente in resultado:
-            print(f'id cliente: {cliente[0]}, {cliente[1]} {cliente[2]}, deporte: {cliente[4]}\n')
+            if cliente[4] == None:
+                    cliente[4] = ""
+            print("|{:^8}|{:^16}|{:^15}|{:^13}|".format(cliente[0],cliente[1],cliente[2],cliente[4]))
+            print("---------------------------------------------------------")
         idS = input("Ingrese el ID del cliente que desea actualizar: ")
         sql ="SELECT id_cliente from Clientes where id_cliente = ?;"
         cursor.execute(sql, idS)
@@ -309,6 +318,7 @@ def modificar():
         print("Error!, no se pudo realizar la mofificacion{}".format(e))
 
 def lista():
+    print("***   DAR DE ALTA UN CLIENTE   ***")
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
@@ -321,14 +331,14 @@ def lista():
         for cliente in resultado:
             if cliente[4] == None:
                 cliente[4] = ""
-           
             print("|{:^8}|{:^16}|{:^15}|{:^13}|{:^12}|{:^18}|{:^10}|".format(cliente[0],cliente[1],cliente[2],cliente[3],cliente[4],cliente[5],cliente[6]))
-        print("----------------------------------------------------------------------------------------------------")
+            print("----------------------------------------------------------------------------------------------------")
         conn.close()
     except Exception as e:
         print("Error!, no se pudo mostrar los clientes{}".format(e))
 
 def ver_cliente():
+    print("***   VER DATOS DE UN CLIENTE   ***")
     try:
         idS = input("\nIngrese el apellido o nombre del cliente que desea buscar: ")
         conn = pyodbc.connect(conexion_sql_server())
@@ -336,9 +346,15 @@ def ver_cliente():
         sql = "SELECT * FROM Clientes WHERE apellido LIKE ? OR nombre LIKE ?;"
         cursor.execute(sql, ('%' + idS + '%', '%' + idS + '%'))
         resultado = cursor.fetchall()
+        print("----------------------------------------------------------------------------------------------------")
+        print("|Cliente |     Nombre     |   Apellido    |   Telefono  |   Deporte   |  Tipo de cuota  |  Estado  |")
+        print("----------------------------------------------------------------------------------------------------")
         if resultado:
             for cliente in resultado:
-                print(f'\nCliente: {cliente[0]}, Nombre: {cliente[1]}, Apellido: {cliente[2]}, Teléfono: {cliente[3]}, Deporte: {cliente[4]}, Tipo de cliente: {cliente[5]}, Estado: {cliente[6]}  \n')
+                if cliente[4] == None:
+                    cliente[4] = ""
+                print("|{:^8}|{:^16}|{:^15}|{:^13}|{:^12}|{:^18}|{:^10}|".format(cliente[0],cliente[1],cliente[2],cliente[3],cliente[4],cliente[5],cliente[6]))
+                print("----------------------------------------------------------------------------------------------------")
         else:
             print(f"No se ha encontrado al cliente: {idS}")
         conn.close()
@@ -375,6 +391,7 @@ def iniciar_sesion(usuario, clave):
         return resultado
 
 def mostrar_informe():
+    print("***   MOSTRAR INFORME   ***")
     mes = 0
     while True:
         try:
@@ -402,9 +419,16 @@ def mostrar_informe():
         valores = (mes, anio)
         cursor.execute(sql, valores)
         resultado = cursor.fetchone()[0]
+        print("***********************************************************************")
+        print("*                           INFORME MENSUAL                           *")
+        print("***********************************************************************")
+        print("*                                                                     *")
         if resultado:
-            print(f'El dinero recaudado en el mes {mes} del año {anio} es de: ${resultado}')
+            print("*  El dinero recaudado en el mes {:<1} del año {:1} es de: ${:<14}*".format(mes,anio,resultado))
+            print("*                                                                     *")
         else:
-            print(f"No se encontraron cuotas en el {mes} del año {anio}")
+            print("*  No se encontraron cuotas en el mes {:<1} del año {:<21}*".format(mes,anio))
+            print("*                                                                     *")
+        print("***********************************************************************")
     except Exception as e:
         print("Error!, no se pudo mostrar el informe{}".format(e))
