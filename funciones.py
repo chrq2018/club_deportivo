@@ -1,5 +1,5 @@
 import pyodbc
-import getpass
+import getpass 
 import datetime
 from os import system
 
@@ -14,13 +14,14 @@ def menu_login():
     print()
     opc = 0
     while True:
-        print("***************************")
-        print("*          LOGIN          *")
-        print("***************************")
+        print("*********************************")
+        print("*             LOGIN             *")
+        print("*********************************")
         print()
         print('1) Inicio')
         print('2) Salir')
         opc = input('Elija una opción correcta: ')
+        print()
         if opc == '1' or opc == '2':
             return int(opc)
         
@@ -71,11 +72,14 @@ def menu_principal(rol):
             if op2 == 10: mostrar_informe()
 
         if op2 == 1:
+            print()
             resultado = validar_inicio_sesion()
             rol = resultado[3]
         elif op2 == 2:
+            print()
             alta()
         elif op2 == 3:
+            print()
             print("***   DAR DE BAJA UN CLIENTE   ***")
             while True:
                 eliminar = input("\nQuiere eliminar un cliente s/n: ")
@@ -86,6 +90,7 @@ def menu_principal(rol):
                     print("Salio de la opcion Baja")
                     break    
         elif op2 == 4:
+            print()
             print("***   MODIFICAR DATOS DE UN CLIENTE   ***")
             while True:
                 actualizar = input("\nQuiere actualizar un dato s/n: ")
@@ -95,12 +100,16 @@ def menu_principal(rol):
                     print("Salio de la opcion modificar")
                     break
         elif op2 == 5:
+            print()
             ver_cliente()
         elif op2 == 6:
+            print()
             lista() 
         elif op2 ==7:
+             print()
              registrar_pago()
         elif op2 ==8:
+            print()
             print("***   MOSTRAR COMPROBANTE   ***")
             id_cliente = int(input("Ingrese el id_cliente: "))
             mes = int(input("Ingrese el mes: "))
@@ -221,8 +230,6 @@ def mostrar_pagos():
     except Exception as e:
         print("Error!, no se puden mostrar los pagos {}".format(e))
 
-
-
 def alta():
     print()
     print("*** DAR DE ALTA UN CLIENTE ***")
@@ -265,8 +272,13 @@ def baja():
         sql = "SELECT * FROM Clientes;"
         cursor.execute(sql)
         resultado = cursor.fetchall()
+        print("-------------------------------------------")
+        print("|Cliente |     Nombre     |   Apellido    |")
+        print("-------------------------------------------")
         for cliente in resultado:
-            print(f'id cliente: {cliente[0]}, {cliente[1]} {cliente[2]}\n')
+            print("|{:^8}|{:^16}|{:^15}|".format(cliente[0],cliente[1],cliente[2]))
+            print("-------------------------------------------")
+        print()
         idS = input("Ingrese el ID del cliente que desea eliminar: ")
         consultaV ="SELECT id_cliente, nombre, apellido from Clientes where id_cliente = ?;"
         cursor.execute(consultaV, idS)
