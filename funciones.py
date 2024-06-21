@@ -1,10 +1,11 @@
 import pyodbc
 import getpass
 import datetime
+from os import system
 
 def conexion_sql_server():
     try:
-        conexion = 'DRIVER={SQL SERVER}; SERVER=MARIANA\SQLEXPRESS;DATABASE=CLUB_DEPORTIVO;Trust_Connection={yes}; UID=sa; PWD=123'                    
+        conexion = 'DRIVER={SQL SERVER}; SERVER=DESKTOP-32A2485\SQLEXPRESS;DATABASE=CLUB_DEPORTIVO;Trust_Connection={yes}; UID=sa; PWD=123'                    
     except ConnectionError as e:
                 print("Ocurrio un error al conectar SQL Server: ", e)
     return conexion
@@ -13,12 +14,16 @@ def menu_login():
     print()
     opc = 0
     while True:
-        print("****Login****")
+        print("***************************")
+        print("*          LOGIN         *")
+        print("***************************")
+        print()
         print('1) Inicio')
         print('2) Salir')
         opc = input('Elija una opción correcta: ')
         if opc == '1' or opc == '2':
             return int(opc)
+        
 
 def menu_gestion_empleado():
     print()
@@ -101,9 +106,6 @@ def menu_principal(rol):
             mes = int(input("Ingrese el mes: "))
             mostrar_comprobante_pago(id_cliente, mes)
         
-
-                
-
 def input_validado(mensaje):
     valor = ''
     while True:
@@ -184,14 +186,15 @@ def mostrar_comprobante_pago(id_cliente, mes):
         cursor.execute(sql, valores)
         resultado = cursor.fetchone()
         if resultado:
-            print("*** Comprobante de pago***")
-            print(f"""
-                Cliente: {resultado[5]}
-                Cuota: {resultado[4]}
-                Mes: {resultado[1]}
-                Año: {resultado[2]}
-                Importe: ${resultado[3]}
-                """)
+            print("------------------------------")
+            print("|*** COMPROBANTE DE PAGO  ***|")
+            print("------------------------------")
+            print("|Cliente: {:<19}|".format(resultado[0]))
+            print("|Cuota:   {:<19}|".format(resultado[4]))
+            print("|Mes:     {:<19}|".format(resultado[1]))
+            print("|Año:     {:<19}|".format(resultado[2]))
+            print("|Importe: {:<19}|".format(resultado[3]))
+            print("------------------------------")
         else: 
             print(f"No se encontró un comprobante para el cliente {id_cliente} en el mes {mes}")
     except Exception as e:
@@ -307,8 +310,14 @@ def lista():
         sql = "SELECT * FROM Clientes;"
         cursor.execute(sql)
         resultado = cursor.fetchall()
+        print("-------------------------------------------------------------------------------------------")
+        print("|Cliente |  Nombre  |   Apellido  |   Telefono  |   Deporte   |  Tipo de cuota  |  Estado  |")
         for cliente in resultado:
-            print(f'Cliente: {cliente[0]}, Nombre: {cliente[1]}, Apellido: {cliente[2]}, Teléfono: {cliente[3]}, Deporte: {cliente[4]}, Tipo de cliente: {cliente[5]}, Estado: {cliente[6]}  \n')
+            if cliente[4] == None:
+                cliente[4] = ""
+            print("-------------------------------------------------------------------------------------------")
+            print("|{:^11}{:<12}{:<14}{:<14}{:<13}{:<18}{:<9}|".format(cliente[0],cliente[1],cliente[2],cliente[3],cliente[4],cliente[5],cliente[6]))
+        print("-------------------------------------------------------------------------------------------")
         conn.close()
     except Exception as e:
         print("Error!, no se pudo mostrar los clientes{}".format(e))

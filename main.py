@@ -9,6 +9,7 @@ considerar según el grupo de trabajo)
 4) Rendición de cuentas mensuales
 """
 from funciones import *
+from os import system
 #Programa principal
 op3 = 0
 rol = ""
@@ -16,12 +17,13 @@ while op3 != 2:
     print("************************************************************")
     print("Bienvenido al sistema de gestión administrativo para el Club")
     print("************************************************************")
+    print()
     op3 = menu_login()
     if op3 == 1:
         resultado = validar_inicio_sesion()
         if resultado != None:
             rol = resultado[3]
-            menu_principal(rol)    
+            menu_principal(rol) 
         else:
             op3 = menu_login()
         
