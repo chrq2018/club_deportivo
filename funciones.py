@@ -364,7 +364,7 @@ def modificar():
         print("Error!, no se pudo realizar la mofificacion{}".format(e))
 
 def lista():
-    print("***   DAR DE ALTA UN CLIENTE   ***")
+    print("***   LISTADO DE CLIENTES   ***")
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
@@ -386,7 +386,7 @@ def lista():
         print("Error!, no se pudo mostrar los clientes{}".format(e))
 
 def ver_cliente():
-    print("***   VER DATOS DE UN CLIENTE   ***")
+    print("***   BUSCAR UN CLIENTE   ***")
     try:
         idS = input_validado("\nIngrese el apellido o nombre del cliente que desea buscar: ")
         conn = pyodbc.connect(conexion_sql_server())
