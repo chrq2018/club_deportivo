@@ -14,9 +14,9 @@ from os import system
 op3 = 0
 rol = ""
 while op3 != 2:
-    print("************************************************************")
-    print("Bienvenido al sistema de gestión administrativo para el Club")
-    print("************************************************************")
+    print("****************************************************************")
+    print("* Bienvenido al sistema de gestión administrativo para el Club *")
+    print("****************************************************************")
     print()
     op3 = menu_login()
     if op3 == 1:
@@ -26,4 +26,8 @@ while op3 != 2:
             menu_principal(rol) 
         else:
             op3 = menu_login()
+    if op3 == 2:
+        print("************************************************************")
+        print("*           Gracias por utilizar nuestro sistema           *")
+        print("************************************************************")
         
