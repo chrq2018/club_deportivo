@@ -373,6 +373,8 @@ def lista():
         for cliente in resultado:
             if cliente[4] == None:
                 cliente[4] = ""
+            if cliente[6] == None:
+                cliente[6] = ""
             print("|{:^8}|{:^16}|{:^15}|{:^13}|{:^12}|{:^18}|{:^10}|".format(cliente[0],cliente[1],cliente[2],cliente[3],cliente[4],cliente[5],cliente[6]))
             print("----------------------------------------------------------------------------------------------------")
         conn.close()
@@ -395,6 +397,8 @@ def ver_cliente():
             for cliente in resultado:
                 if cliente[4] == None:
                     cliente[4] = ""
+                if cliente[6] == None:
+                    cliente[6] = ""
                 print("|{:^8}|{:^16}|{:^15}|{:^13}|{:^12}|{:^18}|{:^10}|".format(cliente[0],cliente[1],cliente[2],cliente[3],cliente[4],cliente[5],cliente[6]))
                 print("----------------------------------------------------------------------------------------------------")
         else:
