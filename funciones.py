@@ -96,6 +96,8 @@ def menu_principal(rol):
                 actualizar = input("\nQuiere actualizar un dato s/n: ")
                 if actualizar.lower() == "s":
                     modificar()
+                    print("\nEl dato fue modificado con éxito!\n")
+                    break
                 else:
                     print("Salio de la opcion modificar")
                     break
@@ -167,7 +169,7 @@ def registrar_pago():
         if cliente == 'Invitado':
             print("Los invitados no pueden registrar pagos.")
             return
-        if deporte != 'NULL':
+        if deporte == None:
             tipo_de_cuota = 'Social'
         else:
             tipo_de_cuota = 'Deportiva'
@@ -207,7 +209,7 @@ def mostrar_comprobante_pago(id_cliente, mes):
             print("------------------------------")
             print("|*** COMPROBANTE DE PAGO  ***|")
             print("------------------------------")
-            print("|Cliente:     {:<15}|".format(resultado[0]))
+            print("|Cliente:     {:<15}|".format(resultado[5]))
             print("|Cuota:       {:<15}|".format(resultado[4]))
             print("|Mes:         {:<15}|".format(resultado[1]))
             print("|Año:         {:<15}|".format(resultado[2]))
@@ -252,13 +254,14 @@ def alta():
                 break
         except:
             print("El teléfono debe ser numérico")
-    deporte = ''
+    deporte = None
     while True:
-        deporte = input("Ingrese el nuevo deporte: ")
-        if deporte in ['Fútbol', 'Básquet', 'Tenis', 'NULL']:
+        deporte = input("Ingrese el nuevo deporte (opcional): ")
+        if deporte in ['Fútbol', 'Básquet', 'Tenis', '']:
+            if deporte == '': deporte = None
             break
         else:
-            print("El deporte ingresado debe ser 'Fútbol', 'Básquet', 'Tenis' o 'NULL'")
+            print("El deporte ingresado debe ser 'Fútbol', 'Básquet', 'Tenis' o ninguno ")
     tipo_de_cliente = ''
     while True:
         tipo_de_cliente = input("Ingrese el tipo de cliente: ")
@@ -268,7 +271,7 @@ def alta():
             print("El tipo de cliente ingresado debe ser 'Socio', 'No socio' o 'Invitado'")
     estado = 'Activo'
     if tipo_de_cliente == 'Invitado':
-        estado = 'NULL'
+        estado = None
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
@@ -280,7 +283,7 @@ def alta():
         conn.close()
     except Exception as e:
         print("Error!, no se pudo dar de alta{}".format(e))
-
+        
 def baja():
     try:
         conn = pyodbc.connect(conexion_sql_server())
@@ -346,13 +349,14 @@ def modificar():
         if resultado:
             while True:
                 deporte = input("Ingrese el nuevo deporte: ")
-                if deporte in ['Fútbol', 'Básquet', 'Tenis', 'NULL']:
+                if deporte in ['Fútbol', 'Básquet', 'Tenis', '']:
+                    if deporte == '': deporte = None
                     sql = "UPDATE Clientes SET deporte = ? where id_cliente = ?;"
                     cursor.execute(sql, (deporte, idS))
                     conn.commit()
                     break
                 else:
-                    print("El deporte ingresado debe ser 'Fútbol', 'Básquet', 'Tenis' o 'NULL'")
+                    print("El deporte ingresado debe ser 'Fútbol', 'Básquet', 'Tenis' o ninguno")
         else:
                 print("El ID ingresado es incorrecto!!")
         conn.close()
