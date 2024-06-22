@@ -5,7 +5,7 @@ from os import system
 
 def conexion_sql_server():
     try:
-        conexion = 'DRIVER={SQL SERVER}; SERVER=DESKTOP-32A2485\SQLEXPRESS;DATABASE=CLUB_DEPORTIVO;Trust_Connection={yes}; UID=sa; PWD=123'                    
+        conexion = 'DRIVER={SQL SERVER}; SERVER=MARIANA\SQLEXPRESS;DATABASE=CLUB_DEPORTIVO;Trust_Connection={yes}; UID=sa; PWD=123'                    
     except ConnectionError as e:
                 print("Ocurrio un error al conectar SQL Server: ", e)
     return conexion
@@ -119,8 +119,10 @@ def input_validado(mensaje):
     valor = ''
     while True:
         valor = input(mensaje)
-        if valor != '':
+        if len(valor) >= 3:
             return valor
+        else:
+            print("Debe ingresar al menos 3 caracteres")
         
 def registrar_pago():
     print("***   REGISTRAR PAGOS   ***\n")
@@ -146,7 +148,14 @@ def registrar_pago():
                 print("El año ingresado debe ser un número mayor a 1900 y no mayor al año actual")
         except:
             print("El año ingresado debe ser un número")
-    id_cliente = int(input("Ingrese el id_cliente: "))
+    id_cliente = 0
+    while True:
+        try:
+            id_cliente = int(input("Ingrese el id del cliente: "))
+            if id_cliente:
+                break
+        except:
+            print("El id debe ser un número")
     tipo_de_cuota = ''
     monto = 0
     try:
@@ -233,9 +242,16 @@ def mostrar_pagos():
 def alta():
     print()
     print("*** DAR DE ALTA UN CLIENTE ***")
-    nombre = input("Ingrese el nombre: ")
-    apellido = input("Ingrese el apellido: ")
-    telefono = input("Ingrese el telefono: ")
+    nombre = input_validado("Ingrese el nombre: ")
+    apellido = input_validado("Ingrese el apellido: ")
+    telefono = 0
+    while True:
+        try:
+            telefono = int(input("Ingrese el teléfono: "))
+            if telefono:
+                break
+        except:
+            print("El teléfono debe ser numérico")
     deporte = ''
     while True:
         deporte = input("Ingrese el nuevo deporte: ")
@@ -279,7 +295,14 @@ def baja():
             print("|{:^8}|{:^16}|{:^15}|".format(cliente[0],cliente[1],cliente[2]))
             print("-------------------------------------------")
         print()
-        idS = input("Ingrese el ID del cliente que desea eliminar: ")
+        idS = 0
+        while True:
+            try:
+                idS = int(input("Ingrese el id del cliente que desea eliminar: "))
+                if idS:
+                    break
+            except:
+                print("El id debe ser un número")
         consultaV ="SELECT id_cliente, nombre, apellido from Clientes where id_cliente = ?;"
         cursor.execute(consultaV, idS)
         idCliente, nombreCliente, apellidoCliente = cursor.fetchone()
@@ -309,7 +332,14 @@ def modificar():
                     cliente[4] = ""
             print("|{:^8}|{:^16}|{:^15}|{:^13}|".format(cliente[0],cliente[1],cliente[2],cliente[4]))
             print("---------------------------------------------------------")
-        idS = input("Ingrese el ID del cliente que desea actualizar: ")
+        idS = 0
+        while True:
+            try:
+                idS = int(input("Ingrese el id del cliente que desea actualizar: "))
+                if idS:
+                    break
+            except:
+                print("El id debe ser un número")
         sql ="SELECT id_cliente from Clientes where id_cliente = ?;"
         cursor.execute(sql, idS)
         resultado = cursor.fetchone()
@@ -352,7 +382,7 @@ def lista():
 def ver_cliente():
     print("***   VER DATOS DE UN CLIENTE   ***")
     try:
-        idS = input("\nIngrese el apellido o nombre del cliente que desea buscar: ")
+        idS = input_validado("\nIngrese el apellido o nombre del cliente que desea buscar: ")
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
         sql = "SELECT * FROM Clientes WHERE apellido LIKE ? OR nombre LIKE ?;"
@@ -377,7 +407,7 @@ def ver_cliente():
 def validar_inicio_sesion():
         cont = 1
         while cont <= 3:   
-            usuario = input("Ingrese usuario: ")
+            usuario = input_validado("Ingrese usuario: ")
             #password = input("Ingrese password: ")
             cantLetras = 2
             password = getpass.getpass("Ingrese password: ")
