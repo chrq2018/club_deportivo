@@ -268,14 +268,11 @@ def alta():
             break
         else:
             print("El tipo de cliente ingresado debe ser 'Socio', 'No socio' o 'Invitado'")
-    estado = 'Activo'
-    if tipo_de_cliente == 'Invitado':
-        estado = None
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
         sql = "INSERT INTO Clientes (nombre, apellido, telefono, deporte, tipo_de_cliente, estado) values (?, ?, ?, ?, ?, ?);"
-        valores = (nombre, apellido, telefono, deporte, tipo_de_cliente, estado)
+        valores = (nombre, apellido, telefono, deporte, tipo_de_cliente)
         cursor.execute(sql,valores)
         conn.commit()
         print(cursor.rowcount,"Registro ingresado")
