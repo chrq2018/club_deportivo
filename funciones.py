@@ -96,7 +96,6 @@ def menu_principal(rol):
                 actualizar = input("\nQuiere actualizar un dato s/n: ")
                 if actualizar.lower() == "s":
                     modificar()
-                    print("\nEl dato fue modificado con éxito!\n")
                     break
                 else:
                     print("Salio de la opcion modificar")
@@ -115,8 +114,8 @@ def menu_principal(rol):
             print("***   MOSTRAR COMPROBANTE   ***")
             id_cliente = int(input("Ingrese el id_cliente: "))
             mes = int(input("Ingrese el mes: "))
-            mostrar_comprobante_pago(id_cliente, mes)
-        
+            mostrar_comprobante_pago(id_cliente, mes) 
+
 def input_validado(mensaje):
     valor = ''
     while True:
@@ -283,7 +282,7 @@ def alta():
         conn.close()
     except Exception as e:
         print("Error!, no se pudo dar de alta{}".format(e))
-        
+
 def baja():
     try:
         conn = pyodbc.connect(conexion_sql_server())
@@ -332,36 +331,67 @@ def modificar():
         print("---------------------------------------------------------")
         for cliente in resultado:
             if cliente[4] == None:
-                    cliente[4] = ""
-            print("|{:^8}|{:^16}|{:^15}|{:^13}|".format(cliente[0],cliente[1],cliente[2],cliente[4]))
+                cliente[4] = ""
+            print("|{:^8}|{:^16}|{:^15}|{:^13}|".format(cliente[0], cliente[1], cliente[2], cliente[4]))
             print("---------------------------------------------------------")
+        
         idS = 0
         while True:
             try:
                 idS = int(input("Ingrese el id del cliente que desea actualizar: "))
-                if idS:
-                    break
-            except:
-                print("El id debe ser un número")
-        sql ="SELECT id_cliente from Clientes where id_cliente = ?;"
-        cursor.execute(sql, idS)
-        resultado = cursor.fetchone()
-        if resultado:
-            while True:
-                deporte = input("Ingrese el nuevo deporte: ")
-                if deporte in ['Fútbol', 'Básquet', 'Tenis', '']:
-                    if deporte == '': deporte = None
-                    sql = "UPDATE Clientes SET deporte = ? where id_cliente = ?;"
-                    cursor.execute(sql, (deporte, idS))
-                    conn.commit()
-                    break
-                else:
-                    print("El deporte ingresado debe ser 'Fútbol', 'Básquet', 'Tenis' o ninguno")
-        else:
-                print("El ID ingresado es incorrecto!!")
+                #if idS:
+                 #   break
+            except ValueError:
+                print("\nEl ID debe ser un número!")
+
+            sql = "SELECT id_cliente FROM Clientes WHERE id_cliente = ?;"
+            cursor.execute(sql, idS)
+            resultado = cursor.fetchone()
+            if resultado:
+                
+                try:
+                    nombre = input("Ingrese el nuevo nombre (deje en blanco para no modificar): ").strip()
+                    apellido = input("Ingrese el nuevo apellido (deje en blanco para no modificar): ").strip()
+                    deporte = input("Ingrese el nuevo deporte (deje en blanco para no modificar): ").strip()
+
+                    if deporte not in ['Fútbol', 'Básquet', 'Tenis', '']:
+                        print("El deporte ingresado debe ser 'Fútbol', 'Básquet' o 'Tenis' ")
+                    else:                                                     
+
+                        query = "UPDATE Clientes SET "
+                        parameters = []
+
+                        if nombre:
+                            query += "nombre = ?, "
+                            parameters.append(nombre)
+                        if apellido:
+                            query += "apellido = ?, "
+                            parameters.append(apellido)
+                        if deporte:
+                            query += "deporte = ?, "
+                            parameters.append(deporte)
+
+
+                        query = query.rstrip(", ") + " WHERE id_cliente = ?"
+                        parameters.append(idS)
+
+                        cursor.execute(query, parameters)
+                        conn.commit()
+                        print("\nCliente actualizado correctamente.\n")
+                        break                    
+                except:
+                    print("\nNo se actualizó ningún dato.\n")
+                    return
+                        
+                    
+            else:
+                print("\nEl ID ingresado es incorrecto!\n")
+
         conn.close()
     except Exception as e:
-        print("Error!, no se pudo realizar la mofificacion{}".format(e))
+        print("\nError!, no se pudo realizar la modificación: {}".format(e))
+
+
 
 def lista():
     print("***   LISTADO DE CLIENTES   ***")
@@ -451,7 +481,7 @@ def mostrar_informe():
             else:
                 print("El mes ingresado debe ser un número entre 1 y 12")
         except:
-            print("El mes ingresado debe ser un número entre 1 y 12")      
+            print("El mes ingresado debe ser un número entre 1 y 12")       
     anio = 0
     while True:
         try:
