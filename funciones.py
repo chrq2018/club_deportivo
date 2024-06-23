@@ -271,7 +271,7 @@ def alta():
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        sql = "INSERT INTO Clientes (nombre, apellido, telefono, deporte, tipo_de_cliente) values (?, ?, ?, ?, ?, ?);"
+        sql = "INSERT INTO Clientes (nombre, apellido, telefono, deporte, tipo_de_cliente) values (?, ?, ?, ?, ?);"
         valores = (nombre, apellido, telefono, deporte, tipo_de_cliente)
         cursor.execute(sql,valores)
         conn.commit()
