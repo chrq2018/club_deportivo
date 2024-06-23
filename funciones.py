@@ -287,7 +287,7 @@ def baja():
     try:
         conn = pyodbc.connect(conexion_sql_server())
         cursor = conn.cursor()
-        sql = "SELECT * FROM Clientes;"
+        sql = "SELECT * FROM Clientes WHERE estado != 'Inactivo';"
         cursor.execute(sql)
         resultado = cursor.fetchall()
         print("-------------------------------------------")

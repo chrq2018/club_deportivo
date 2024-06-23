@@ -55,16 +55,37 @@ VALUES
 
 INSERT INTO Pagos (Mes, Anio, Monto, Tipo_de_cuota, Id_cliente)
 VALUES 
-    (1, 2024, 100.00, 'Deportiva', 1),
-    (2, 2024, 100.00, 'Deportiva', 2),
-    (3, 2024, 150.00, 'Deportiva', 3),
-    (4, 2024, 150.00, 'Social', 4),
-    (5, 2024, 200.00, 'Deportiva', 5),
-    (6, 2024, 200.00, 'Deportiva', 1),
-    (7, 2024, 100.00, 'Deportiva', 7),
-    (8, 2024, 150.00, 'Social', 8),
-    (9, 2024, 200.00, 'Deportiva', 2),
-    (10, 2024, 100.00, 'Deportiva', 10);
+    (1, 2024, 7500, 'Deportiva', 1),
+    (1, 2024, 12500, 'Deportiva', 2),
+    (1, 2024, 7500, 'Deportiva', 3),
+    (1, 2024, 10000, 'Social', 4),
+    (1, 2024, 12500, 'Deportiva', 5),
+    (2, 2024, 7500, 'Deportiva', 1),
+    (2, 2024, 12500, 'Deportiva', 2),
+    (2, 2024, 7500, 'Deportiva', 3),
+    (2, 2024, 10000, 'Social', 4),
+    (2, 2024, 12500, 'Deportiva', 5),
+    (3, 2024, 7500, 'Deportiva', 1),
+    (3, 2024, 12500, 'Deportiva', 2),
+    (3, 2024, 7500, 'Deportiva', 3),
+    (3, 2024, 10000, 'Social', 4),
+    (3, 2024, 12500, 'Deportiva', 5),
+    (4, 2024, 7500, 'Deportiva', 1),
+    (4, 2024, 12500, 'Deportiva', 2),
+    (4, 2024, 7500, 'Deportiva', 3),
+    (4, 2024, 10000, 'Social', 4),
+    (4, 2024, 12500, 'Deportiva', 5),
+    (5, 2024, 7500, 'Deportiva', 1),
+    (5, 2024, 12500, 'Deportiva', 2),
+    (5, 2024, 7500, 'Deportiva', 3),
+    (5, 2024, 10000, 'Social', 4),
+    (5, 2024, 12500, 'Deportiva', 5),
+    (6, 2024, 12500, 'Deportiva', 5),
+    (6, 2024, 7500, 'Deportiva', 1),
+    (6, 2024, 12500, 'Deportiva', 7),
+    (6, 2024, 12500, 'Social', 8),
+    (6, 2024, 12500, 'Deportiva', 2),
+    (6, 2024, 12500, 'Deportiva', 10);
 
 
 
