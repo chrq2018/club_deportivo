@@ -39,16 +39,16 @@ CREATE TABLE Usuarios (
 
 INSERT INTO Clientes (Nombre, Apellido, Telefono, Deporte, Tipo_de_cliente)
 VALUES 
-    ('Juan', 'Pérez', '555123456', 'Fútbol', 'Socio'),
-    ('Ana', 'Martínez', '555987654', 'Tenis', 'No socio'),
-    ('Luis', 'García', '555456789', 'Básquet', 'Socio'),
-    ('María', 'López', '555654321', NULL, 'Socio'),
-    ('Carlos', 'Sánchez', '555321456', 'Fútbol', 'No socio'),
-    ('Laura', 'Fernández', '555789123', 'Tenis', 'Invitado'),
-    ('Miguel', 'Torres', '555987321', 'Básquet', 'No socio'),
-    ('Lucía', 'Ramírez', '555654987', NULL, 'Socio'),
-    ('Pedro', 'Hernández', '555123789', 'Fútbol', 'Invitado'),
-    ('Elena', 'Díaz', '555321789', 'Tenis', 'No socio');
+    ('Juan', 'Pérez', '1145632548', 'Fútbol', 'Socio'),
+    ('Ana', 'Martínez', '1145678913', 'Tenis', 'No socio'),
+    ('Luis', 'García', '1122333445', 'Básquet', 'Socio'),
+    ('María', 'López', '1123456789', NULL, 'Socio'),
+    ('Carlos', 'Sánchez', '1135356485', 'Fútbol', 'No socio'),
+    ('Laura', 'Fernández', '1134578956', 'Tenis', 'Invitado'),
+    ('Miguel', 'Torres', '1166569886', 'Básquet', 'No socio'),
+    ('Lucía', 'Ramírez', '1145674562', NULL, 'Socio'),
+    ('Pedro', 'Hernández', '1124578695', NULL, 'Invitado'),
+    ('Elena', 'Díaz', '1132654875', 'Tenis', 'No socio');
 
 
 

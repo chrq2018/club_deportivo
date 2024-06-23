@@ -355,7 +355,7 @@ def modificar():
                     deporte = input("Ingrese el nuevo deporte (deje en blanco para no modificar): ").strip()
 
                     if deporte not in ['Fútbol', 'Básquet', 'Tenis', '']:
-                        print("El deporte ingresado debe ser 'Fútbol', 'Básquet' o 'Tenis' ")
+                        print("El deporte ingresado debe ser 'Fútbol', 'Básquet', 'Tenis' o ninguno ")
                     else:                                                     
 
                         query = "UPDATE Clientes SET "
