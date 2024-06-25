@@ -72,9 +72,7 @@ def menu_principal(rol):
             if op2 == 10: mostrar_informe()
 
         if op2 == 1:
-            print()
-            resultado = validar_inicio_sesion()
-            rol = resultado[3]
+            break
         elif op2 == 2:
             print()
             alta()
